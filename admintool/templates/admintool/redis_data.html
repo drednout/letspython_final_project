@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <table class="table">
+                <caption class="text-center">Highscores</caption>
+                    <tr>
+                        <th class="text-center">Player id</th>
+                        <th class="text-center">Score</th>
+                    </tr>
+                    {% for row in data %}
+                        <tr>
+                        {% for dt in row %}
+                            <td class="text-center">{{ dt }}</td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+                {% if data.has_previous %}
+                    <a href="?page={{ data.previous_page_number }}">previous</a>
+                {% endif %}
+
+
+                    Page {{ data.number }} of {{ data.paginator.num_pages }}.
+
+
+                {% if data.has_next %}
+                    <a href="?page={{ data.next_page_number }}">next</a>
+                {% endif %}
+                <br><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

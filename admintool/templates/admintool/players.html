@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+{% load replace_password_hash %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <form action="" method="get">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </span>
+                        {{ form.email }}
+                    </div>
+                </form>
+            {% if playerslist|length == 0 %}
+                <br><p class="text-center">No players to display</p>
+                {% else %}
+                <table class="table">
+                    <caption class="text-center">Players list</caption>
+                    <tr>
+                        <th>Nickname</th>
+                        <th>Email</th>
+                        <th>Password hash</th>
+                        <th>Exp</th>
+                    </tr>
+                    {% for player in playerslist %}
+                        <tr>
+                            <td><a href="{{ player.id }}/">{{ player.nickname }}</a></td>
+                            <td>{{ player.email }}</td>
+                            <td>{{ player.password_hash|password }}</td>
+                            <td><a href="{{ player.id }}/changeexp">{{ player.xp }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+                 {% if is_paginated %}
+                    <div class="pagination">
+                        <span class="page-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?{% url_replace request 'page' page_obj.previous_page_number %}">previous</a>
+                            {% endif %}
+                            <span class="page-current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+                            {% if page_obj.has_next %}
+                                <a href="?{% url_replace request 'page' page_obj.next_page_number %}">next</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                 {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

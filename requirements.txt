@@ -1,0 +1,9 @@
+Django==1.8
+psycopg2
+argparse==1.2.1
+msgpack-python==0.4.7
+redis==2.10.5
+wsgiref==0.1.2
+dj-database-url==0.3.0
+gunicorn==19.4.5
+psycopg2==2.6.1

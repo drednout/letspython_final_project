@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+{% block content %}
+    <div class="container">
+    {% if user.is_authenticated %}
+        <p>You have already been logged in. <a href="/logout/">Log out</a>.</p>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <h2 class="text-center">Authentication</h2><br>
+                <form action="" method="post">
+                  {% csrf_token %}
+                    {{ form.username }}
+
+                    {% if form.username.errors %}
+                        <br>
+                        <div class="alert alert-danger">
+                            {% for error in form.username.errors %}
+                                <p>{{ error|escape }}</p>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <br>
+                    {% endif %}
+
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <br>
+                        <div class="alert alert-danger">
+                            {% for error in form.password.errors %}
+                                <p>{{ error|escape }}</p>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <br>
+                    {% endif %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                        <p>{{ error|escape }}</p>
+                    </div>
+                    {% endfor %}
+
+                  <button type="submit" class="btn btn-default center-block">Войти</button>
+                </form>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
