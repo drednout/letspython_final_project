@@ -2,7 +2,7 @@
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 #
 # Also note: You'll have to insert the output of 'django-admin sqlcustom [app_label]'
@@ -20,7 +20,7 @@ class LogGameEvents(models.Model):
     created = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'log_game_events'
 
 
@@ -30,7 +30,7 @@ class PlayerAchievements(models.Model):
     created = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'player_achievements'
         unique_together = (('player', 'achievement_id'),)
 
@@ -43,7 +43,7 @@ class PlayerSessions(models.Model):
     updated = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'player_sessions'
 
 
@@ -54,7 +54,7 @@ class PlayerStats(models.Model):
     value = models.IntegerField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'player_stats'
 
 
@@ -67,7 +67,7 @@ class Players(models.Model):
     updated = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         permissions = (
                         ('change_exp', 'Can change player experience'),
         )

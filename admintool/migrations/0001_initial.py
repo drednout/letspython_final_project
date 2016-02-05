@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'log_game_events',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'player_achievements',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -48,7 +48,8 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'players',
-                'managed': False,
+                'managed': True,
+                'permissions': (('change_exp', 'Can change player experience'),),
             },
         ),
         migrations.CreateModel(
@@ -59,10 +60,11 @@ class Migration(migrations.Migration):
                 ('ip_addr', models.CharField(max_length=25, null=True, blank=True)),
                 ('created', models.DateTimeField()),
                 ('updated', models.DateTimeField()),
+                ('player', models.ForeignKey(to='admintool.Players')),
             ],
             options={
                 'db_table': 'player_sessions',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -71,10 +73,25 @@ class Migration(migrations.Migration):
                 ('id', models.IntegerField(serialize=False, primary_key=True)),
                 ('stat_id', models.IntegerField()),
                 ('value', models.IntegerField()),
+                ('player', models.ForeignKey(to='admintool.Players')),
             ],
             options={
                 'db_table': 'player_stats',
-                'managed': False,
+                'managed': True,
             },
+        ),
+        migrations.AddField(
+            model_name='playerachievements',
+            name='player',
+            field=models.ForeignKey(to='admintool.Players'),
+        ),
+        migrations.AddField(
+            model_name='loggameevents',
+            name='player',
+            field=models.ForeignKey(to='admintool.Players'),
+        ),
+        migrations.AlterUniqueTogether(
+            name='playerachievements',
+            unique_together=set([('player', 'achievement_id')]),
         ),
     ]
