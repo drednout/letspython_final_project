@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from admintool import views
+from . import settings
 
 urlpatterns = [
     # Examples:
@@ -14,5 +15,6 @@ urlpatterns = [
     url(r'^$', views.mainpage),
     url(r'^login/$', views.LoginFormView.as_view()),
     url(r'^logout/$', views.logout_user),
-
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 ]
+
