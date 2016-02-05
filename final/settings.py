@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from urlparse import urlparse
 import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,11 +75,14 @@ WSGI_APPLICATION = 'final.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'xo_db',
+        'USER': 'root',
+        'PASSWORD': '1',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -87,6 +91,15 @@ DATABASES['default'] =  dj_database_url.config()
 
 # Enable Persistent Connections
 DATABASES['default']['CONN_MAX_AGE'] = 500
+
+
+REDIS_URL = os.getenv('REDISTOGO_URL', 'redis://root:@localhost:6379')
+uri = urlparse(REDIS_URL)
+(username_password, host_port) = uri.netloc.split("@")
+
+REDIS_HOST = host_port.split(":")[0]
+REDIS_PORT = int(host_port.split(":")[1])
+REDIS_PASSWORD = username_password.split(":")[1]
 
 
 # Internationalization
