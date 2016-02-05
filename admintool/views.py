@@ -92,7 +92,7 @@ def access_denied(request):
 
 def show_redis_data(request):
 
-    redis_con = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_PASSWORD)
+    redis_con = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, password=REDIS_PASSWORD)
     redis_data = redis_con.zrevrange(name='scores', start=0, end=-1, withscores=True)
     paginator = Paginator(redis_data, PLAYERS_PAGINATE_BY)
     page = request.GET.get('page')
